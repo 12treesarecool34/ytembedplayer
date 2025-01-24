@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Embed Player</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/microsoft/fluentui-emoji/refs/heads/main/assets/Deciduous%20tree/3D/deciduous_tree_3d.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        button {
+            background-color: mediumpurple;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+            width: 100px;
+        }
+        button:hover {
+            background-color: #6a0dad;
+        }
+        input[type="text"] {
+            background-color: #2a2a2a;
+            color: white;
+            border: 2px solid #444;
+            padding: 5px 10px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <iframe id="videoPlayer" src="https://www.youtube.com/embed/" allowfullscreen></iframe>
+    </div>
+    <form class="controls">
+        <input type="text" autocomplete="off" id="youtubeUrl" placeholder="Enter YouTube Video URL">
+        <button type="submit">Load Video</button>
+    </form>
+
+    <script>
+        document.querySelector('.controls').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let url = document.getElementById('youtubeUrl').value;
+            let videoId = url.split('v=')[1];
+            if (videoId) {
+                let ampersandPosition = videoId.indexOf('&');
+                if (ampersandPosition !== -1) {
+                    videoId = videoId.substring(0, ampersandPosition);
+                }
+                let embedUrl = 'https://www.youtube.com/embed/' + videoId;
+                document.getElementById('videoPlayer').src = embedUrl;
+            }
+        });
+    </script>
+</body>
+</html>
